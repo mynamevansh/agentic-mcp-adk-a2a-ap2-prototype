@@ -1,6 +1,9 @@
 # Core dependencies for agentic prototype
 # Python 3.9+ required
 
+# Web UI (optional - for observability dashboard)
+flask>=3.0.0
+
 # MCP Server dependencies
 pydantic>=2.0.0
 fastapi>=0.104.0
