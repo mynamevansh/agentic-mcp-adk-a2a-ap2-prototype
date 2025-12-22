@@ -38,14 +38,14 @@
     <div class="container">
         <!-- Header -->
         <header>
-            <h1>🤖 Agentic System Observatory</h1>
+            <h1>Agentic System Observatory</h1>
             <p class="subtitle">Real-time visualization of MCP + ADK + A2A + AP2 agent execution</p>
         </header>
 
         <!-- Control Panel -->
         <div class="control-panel">
             <button id="runBtn" class="run-button">
-                ▶️ Run Agent Demo
+                Run Agent Demo
             </button>
             <div id="status" class="status">Ready</div>
         </div>
@@ -69,7 +69,7 @@
         <!-- Log Viewer -->
         <div class="log-container">
             <div class="log-header">
-                <h2>📋 Execution Logs</h2>
+                <h2>Execution Logs</h2>
                 <button id="clearBtn" class="clear-button">Clear Logs</button>
             </div>
             <pre id="logOutput" class="log-output">Waiting for execution...</pre>
@@ -77,7 +77,7 @@
 
         <!-- Architecture Info -->
         <div class="info-panel">
-            <h3>ℹ️ System Architecture</h3>
+            <h3>System Architecture</h3>
             <ul>
                 <li><strong>Agent Kai (Planner):</strong> Decomposes goals into execution plans</li>
                 <li><strong>Agent Nav (Executor):</strong> Executes tasks using MCP tools</li>
@@ -126,7 +126,7 @@
         runBtn.addEventListener('click', async () => {
             // Update UI state
             runBtn.disabled = true;
-            runBtn.textContent = '⏳ Running...';
+            runBtn.textContent = 'Running...';
             status.textContent = 'Executing agent system...';
             status.className = 'status running';
             logOutput.textContent = 'Starting agent execution...\n\n';
@@ -156,14 +156,14 @@
 
                 // Update status based on success
                 if (data.success) {
-                    status.textContent = '✅ Execution completed successfully';
+                    status.textContent = 'Execution completed successfully';
                     status.className = 'status success';
-                    executionStatus.textContent = '✅ Success';
+                    executionStatus.textContent = 'Success';
                     executionStatus.className = 'status-badge success';
                 } else {
-                    status.textContent = '❌ Execution failed';
+                    status.textContent = 'Execution failed';
                     status.className = 'status error';
-                    executionStatus.textContent = '❌ Failed';
+                    executionStatus.textContent = 'Failed';
                     executionStatus.className = 'status-badge error';
                 }
 
@@ -172,12 +172,12 @@
             } catch (error) {
                 // Handle network or server errors
                 logOutput.textContent = `Error: ${error.message}\n\nFailed to connect to backend server.`;
-                status.textContent = '❌ Connection error';
+                status.textContent = 'Connection error';
                 status.className = 'status error';
             } finally {
                 // Re-enable button
                 runBtn.disabled = false;
-                runBtn.textContent = '▶️ Run Agent Demo';
+                runBtn.textContent = 'Run Agent Demo';
             }
         });
 

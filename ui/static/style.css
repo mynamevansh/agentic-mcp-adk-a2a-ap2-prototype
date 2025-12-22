@@ -1,14 +1,13 @@
 /*
- * MINIMAL STYLING FOR AGENTIC SYSTEM UI
+ * ENTERPRISE ADMIN DASHBOARD STYLING
  * 
  * Design Philosophy:
- * - Clean and professional
- * - Focus on readability, not aesthetics
- * - Terminal-inspired for technical audience
- * - Minimal distractions from the agent logs
+ * - MongoDB Atlas / AWS Console inspired
+ * - Clean, flat, professional
+ * - Engineering-first design
+ * - Clarity over decoration
  * 
- * This is NOT a consumer app - it's an observability tool
- * for engineers and technical stakeholders.
+ * This is an infrastructure observability tool.
  */
 
 /* Reset and Base Styles */
@@ -19,227 +18,250 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: #F8F9FA;
+    color: #1F2937;
+    line-height: 1.5;
     min-height: 100vh;
-    padding: 20px;
+    padding: 0;
 }
 
 /* Container */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    background: #F8F9FA;
 }
 
 /* Header */
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    text-align: center;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 20px 32px;
+    text-align: left;
 }
 
 header h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 4px;
 }
 
 .subtitle {
-    font-size: 0.95rem;
-    opacity: 0.9;
+    font-size: 0.875rem;
+    color: #6B7280;
+    font-weight: 400;
 }
 
 /* Control Panel */
 .control-panel {
-    padding: 30px;
-    background: #f8f9fa;
-    border-bottom: 2px solid #e9ecef;
+    padding: 24px 32px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E7EB;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .run-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 6px;
+    background: #1F2937;
+    color: #FFFFFF;
+    border: 1px solid #1F2937;
+    padding: 10px 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: background-color 0.15s ease;
 }
 
 .run-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-}
-
-.run-button:active:not(:disabled) {
-    transform: translateY(0);
+    background: #374151;
+    border-color: #374151;
 }
 
 .run-button:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
 .status {
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: 6px 12px;
+    border-radius: 4px;
     font-weight: 500;
-    background: #e9ecef;
-    color: #495057;
+    font-size: 0.875rem;
+    background: #F3F4F6;
+    color: #6B7280;
+    border: 1px solid #E5E7EB;
 }
 
 .status.running {
-    background: #fff3cd;
-    color: #856404;
+    background: #FEF3C7;
+    color: #92400E;
+    border-color: #FDE68A;
 }
 
 .status.success {
-    background: #d4edda;
-    color: #155724;
+    background: #D1FAE5;
+    color: #065F46;
+    border-color: #A7F3D0;
 }
 
 .status.error {
-    background: #f8d7da;
-    color: #721c24;
+    background: #FEE2E2;
+    color: #991B1B;
+    border-color: #FECACA;
 }
 
 /* Execution Info */
 .execution-info {
-    padding: 20px 30px;
-    background: #f8f9fa;
-    border-bottom: 2px solid #e9ecef;
+    padding: 20px 32px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E7EB;
     display: flex;
-    gap: 30px;
+    gap: 32px;
     flex-wrap: wrap;
 }
 
 .info-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .info-item .label {
-    font-weight: 600;
-    color: #495057;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+.info-item span:not(.label) {
+    font-size: 0.875rem;
+    color: #1F2937;
 }
 
 .status-badge {
-    padding: 4px 12px;
+    padding: 4px 10px;
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
 .status-badge.success {
-    background: #d4edda;
-    color: #155724;
+    background: #D1FAE5;
+    color: #065F46;
 }
 
 .status-badge.error {
-    background: #f8d7da;
-    color: #721c24;
+    background: #FEE2E2;
+    color: #991B1B;
 }
 
 /* Log Container */
 .log-container {
-    padding: 30px;
+    padding: 24px 32px;
+    background: #FFFFFF;
+    margin: 24px 32px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
 }
 
 .log-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E5E7EB;
 }
 
 .log-header h2 {
-    font-size: 1.3rem;
-    color: #495057;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1F2937;
 }
 
 .clear-button {
-    background: #6c757d;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 0.9rem;
+    background: #FFFFFF;
+    color: #6B7280;
+    border: 1px solid #E5E7EB;
+    padding: 6px 14px;
+    font-size: 0.875rem;
+    font-weight: 500;
     border-radius: 4px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.15s ease;
 }
 
 .clear-button:hover {
-    background: #5a6268;
+    background: #F9FAFB;
+    color: #1F2937;
+    border-color: #D1D5DB;
 }
 
 /* Log Output - Terminal Style */
 .log-output {
-    background: #1e1e1e;
-    color: #d4d4d4;
-    padding: 20px;
-    border-radius: 6px;
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
+    background: #1F2937;
+    color: #E5E7EB;
+    padding: 16px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
     max-height: 500px;
     overflow-y: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #374151;
 }
 
 /* Custom Scrollbar for Logs */
 .log-output::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 .log-output::-webkit-scrollbar-track {
-    background: #2d2d2d;
-    border-radius: 6px;
+    background: #374151;
 }
 
 .log-output::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 6px;
+    background: #6B7280;
+    border-radius: 4px;
 }
 
 .log-output::-webkit-scrollbar-thumb:hover {
-    background: #777;
+    background: #9CA3AF;
 }
 
 /* Info Panel */
 .info-panel {
-    padding: 30px;
-    background: #f8f9fa;
-    border-top: 2px solid #e9ecef;
+    padding: 24px 32px;
+    background: #FFFFFF;
+    margin: 24px 32px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
 }
 
 .info-panel h3 {
-    color: #495057;
-    margin-bottom: 15px;
+    color: #1F2937;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
 }
 
 .info-panel ul {
     list-style: none;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .info-panel li {
-    padding: 8px 0;
-    border-bottom: 1px solid #e9ecef;
+    padding: 10px 0;
+    border-bottom: 1px solid #F3F4F6;
+    font-size: 0.875rem;
+    color: #4B5563;
 }
 
 .info-panel li:last-child {
@@ -247,38 +269,49 @@ header h1 {
 }
 
 .info-panel strong {
-    color: #667eea;
+    color: #1F2937;
+    font-weight: 600;
 }
 
 .note {
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
-    padding: 15px;
+    background: #FFFBEB;
+    border-left: 3px solid #F59E0B;
+    padding: 12px 16px;
     border-radius: 4px;
-    font-size: 0.9rem;
-    color: #856404;
+    font-size: 0.875rem;
+    color: #78350F;
+    border: 1px solid #FDE68A;
+    border-left: 3px solid #F59E0B;
+}
+
+.note strong {
+    color: #92400E;
 }
 
 .note code {
-    background: rgba(0, 0, 0, 0.1);
+    background: #FEF3C7;
     padding: 2px 6px;
     border-radius: 3px;
-    font-family: 'Consolas', monospace;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    font-size: 0.8125rem;
+    color: #78350F;
 }
 
 /* Footer */
 footer {
-    padding: 20px;
+    padding: 20px 32px;
     text-align: center;
-    background: #343a40;
-    color: white;
-    font-size: 0.9rem;
+    background: #FFFFFF;
+    border-top: 1px solid #E5E7EB;
+    color: #6B7280;
+    font-size: 0.875rem;
+    margin-top: 24px;
 }
 
 footer a {
-    color: #667eea;
+    color: #1F2937;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 footer a:hover {
@@ -287,23 +320,39 @@ footer a:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    header {
+        padding: 16px 20px;
+    }
+
     header h1 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
     
     .control-panel {
+        padding: 16px 20px;
         flex-direction: column;
         align-items: stretch;
     }
     
     .execution-info {
+        padding: 16px 20px;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
     }
     
+    .log-container,
+    .info-panel {
+        margin: 16px 20px;
+        padding: 16px;
+    }
+
     .log-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 12px;
+    }
+
+    footer {
+        padding: 16px 20px;
     }
 }
