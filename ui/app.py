@@ -182,6 +182,66 @@ def run_a2a_demo():
         }), 500
 
 
+@app.route('/run-a2a-enhanced', methods=['POST'])
+def run_a2a_enhanced():
+    """
+    Execute the Enhanced A2A KYC verification demo with Verification State View
+    
+    Demonstrates state-based authorization with extended permissions
+    and privacy-preserving verification state.
+    """
+    try:
+        # Record execution start time
+        start_time = datetime.now(timezone.utc)
+        
+        # Execute a2a_kyc_enhanced.py as a subprocess
+        result = subprocess.run(
+            [sys.executable, 'a2a_kyc_enhanced.py'],
+            cwd=PROJECT_ROOT,  # Run from project root
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            errors='replace',
+            timeout=30
+        )
+        
+        # Record execution end time
+        end_time = datetime.now(timezone.utc)
+        execution_time = (end_time - start_time).total_seconds()
+        
+        # Check if execution was successful
+        if result.returncode == 0:
+            return jsonify({
+                'success': True,
+                'logs': result.stdout,
+                'execution_time': execution_time,
+                'timestamp': start_time.isoformat(),
+                'message': 'Enhanced A2A KYC demo executed successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'logs': result.stderr or result.stdout,
+                'execution_time': execution_time,
+                'timestamp': start_time.isoformat(),
+                'message': 'Enhanced A2A KYC demo execution failed'
+            }), 500
+            
+    except subprocess.TimeoutExpired:
+        return jsonify({
+            'success': False,
+            'logs': 'Execution timeout after 30 seconds',
+            'message': 'Enhanced A2A KYC demo execution timed out'
+        }), 500
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'logs': str(e),
+            'message': f'Error executing Enhanced A2A KYC demo: {str(e)}'
+        }), 500
+
+
 @app.route('/health', methods=['GET'])
 def health():
     """

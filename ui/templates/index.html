@@ -77,42 +77,43 @@
             <pre id="logOutput" class="log-output">Waiting for execution...</pre>
         </div>
 
-        <!-- A2A KYC Demo Section -->
+        <!-- Enhanced A2A KYC Demo Section -->
         <div class="demo-section">
             <div class="section-header">
-                <h2>A2A KYC Verification Demo</h2>
-                <p class="section-description">Agent-to-Agent communication for one-time KYC with reusable credentials
-                </p>
+                <h2>Enhanced A2A KYC with Verification State View</h2>
+                <p class="section-description">State-based authorization with extended permissions and
+                    privacy-preserving
+                    verification</p>
             </div>
 
             <div class="control-panel">
-                <button id="runA2ABtn" class="run-button">
-                    Run A2A KYC Demo
+                <button id="runEnhancedBtn" class="run-button">
+                    Run Enhanced A2A Demo
                 </button>
-                <div id="a2aStatus" class="status">Ready</div>
+                <div id="enhancedStatus" class="status">Ready</div>
             </div>
 
-            <div id="a2aExecutionInfo" class="execution-info" style="display: none;">
+            <div id="enhancedExecutionInfo" class="execution-info" style="display: none;">
                 <div class="info-item">
                     <span class="label">Execution Time:</span>
-                    <span id="a2aExecutionTime">-</span>
+                    <span id="enhancedExecutionTime">-</span>
                 </div>
                 <div class="info-item">
                     <span class="label">Timestamp:</span>
-                    <span id="a2aTimestamp">-</span>
+                    <span id="enhancedTimestamp">-</span>
                 </div>
                 <div class="info-item">
                     <span class="label">Status:</span>
-                    <span id="a2aExecutionStatus">-</span>
+                    <span id="enhancedExecutionStatus">-</span>
                 </div>
             </div>
 
             <div class="log-container">
                 <div class="log-header">
-                    <h2>A2A Demo Logs</h2>
-                    <button id="clearA2ABtn" class="clear-button">Clear Logs</button>
+                    <h2>Enhanced Demo Logs</h2>
+                    <button id="clearEnhancedBtn" class="clear-button">Clear Logs</button>
                 </div>
-                <pre id="a2aLogOutput" class="log-output">Waiting for execution...</pre>
+                <pre id="enhancedLogOutput" class="log-output">Waiting for execution...</pre>
             </div>
         </div>
 
@@ -236,29 +237,30 @@
         });
         observer.observe(logOutput, { childList: true, subtree: true });
 
-        // A2A KYC Demo handlers
-        const runA2ABtn = document.getElementById('runA2ABtn');
-        const clearA2ABtn = document.getElementById('clearA2ABtn');
-        const a2aLogOutput = document.getElementById('a2aLogOutput');
-        const a2aStatus = document.getElementById('a2aStatus');
-        const a2aExecutionInfo = document.getElementById('a2aExecutionInfo');
-        const a2aExecutionTime = document.getElementById('a2aExecutionTime');
-        const a2aTimestamp = document.getElementById('a2aTimestamp');
-        const a2aExecutionStatus = document.getElementById('a2aExecutionStatus');
 
-        // Run A2A KYC demo
-        runA2ABtn.addEventListener('click', async () => {
+        // Enhanced A2A KYC Demo handlers
+        const runEnhancedBtn = document.getElementById('runEnhancedBtn');
+        const clearEnhancedBtn = document.getElementById('clearEnhancedBtn');
+        const enhancedLogOutput = document.getElementById('enhancedLogOutput');
+        const enhancedStatus = document.getElementById('enhancedStatus');
+        const enhancedExecutionInfo = document.getElementById('enhancedExecutionInfo');
+        const enhancedExecutionTime = document.getElementById('enhancedExecutionTime');
+        const enhancedTimestamp = document.getElementById('enhancedTimestamp');
+        const enhancedExecutionStatus = document.getElementById('enhancedExecutionStatus');
+
+        // Run Enhanced A2A KYC demo
+        runEnhancedBtn.addEventListener('click', async () => {
             // Update UI state
-            runA2ABtn.disabled = true;
-            runA2ABtn.textContent = 'Running...';
-            a2aStatus.textContent = 'Executing A2A KYC demo...';
-            a2aStatus.className = 'status running';
-            a2aLogOutput.textContent = 'Starting A2A KYC verification demo...\n\n';
-            a2aExecutionInfo.style.display = 'none';
+            runEnhancedBtn.disabled = true;
+            runEnhancedBtn.textContent = 'Running...';
+            enhancedStatus.textContent = 'Executing Enhanced A2A demo...';
+            enhancedStatus.className = 'status running';
+            enhancedLogOutput.textContent = 'Starting Enhanced A2A KYC demo with Verification State View...\n\n';
+            enhancedExecutionInfo.style.display = 'none';
 
             try {
-                // Call backend to execute a2a_kyc_demo.py
-                const response = await fetch('/run-a2a-demo', {
+                // Call backend to execute a2a_kyc_enhanced.py
+                const response = await fetch('/run-a2a-enhanced', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -268,56 +270,56 @@
                 const data = await response.json();
 
                 // Display logs
-                a2aLogOutput.textContent = data.logs || 'No logs available';
+                enhancedLogOutput.textContent = data.logs || 'No logs available';
 
                 // Update execution info
                 if (data.execution_time) {
-                    a2aExecutionTime.textContent = `${data.execution_time.toFixed(2)}s`;
+                    enhancedExecutionTime.textContent = `${data.execution_time.toFixed(2)}s`;
                 }
                 if (data.timestamp) {
-                    a2aTimestamp.textContent = new Date(data.timestamp).toLocaleString();
+                    enhancedTimestamp.textContent = new Date(data.timestamp).toLocaleString();
                 }
 
                 // Update status based on success
                 if (data.success) {
-                    a2aStatus.textContent = 'Execution completed successfully';
-                    a2aStatus.className = 'status success';
-                    a2aExecutionStatus.textContent = 'Success';
-                    a2aExecutionStatus.className = 'status-badge success';
+                    enhancedStatus.textContent = 'Execution completed successfully';
+                    enhancedStatus.className = 'status success';
+                    enhancedExecutionStatus.textContent = 'Success';
+                    enhancedExecutionStatus.className = 'status-badge success';
                 } else {
-                    a2aStatus.textContent = 'Execution failed';
-                    a2aStatus.className = 'status error';
-                    a2aExecutionStatus.textContent = 'Failed';
-                    a2aExecutionStatus.className = 'status-badge error';
+                    enhancedStatus.textContent = 'Execution failed';
+                    enhancedStatus.className = 'status error';
+                    enhancedExecutionStatus.textContent = 'Failed';
+                    enhancedExecutionStatus.className = 'status-badge error';
                 }
 
-                a2aExecutionInfo.style.display = 'flex';
+                enhancedExecutionInfo.style.display = 'flex';
 
             } catch (error) {
                 // Handle network or server errors
-                a2aLogOutput.textContent = `Error: ${error.message}\n\nFailed to connect to backend server.`;
-                a2aStatus.textContent = 'Connection error';
-                a2aStatus.className = 'status error';
+                enhancedLogOutput.textContent = `Error: ${error.message}\n\nFailed to connect to backend server.`;
+                enhancedStatus.textContent = 'Connection error';
+                enhancedStatus.className = 'status error';
             } finally {
                 // Re-enable button
-                runA2ABtn.disabled = false;
-                runA2ABtn.textContent = 'Run A2A KYC Demo';
+                runEnhancedBtn.disabled = false;
+                runEnhancedBtn.textContent = 'Run Enhanced A2A Demo';
             }
         });
 
-        // Clear A2A logs
-        clearA2ABtn.addEventListener('click', () => {
-            a2aLogOutput.textContent = 'Waiting for execution...';
-            a2aStatus.textContent = 'Ready';
-            a2aStatus.className = 'status';
-            a2aExecutionInfo.style.display = 'none';
+        // Clear Enhanced logs
+        clearEnhancedBtn.addEventListener('click', () => {
+            enhancedLogOutput.textContent = 'Waiting for execution...';
+            enhancedStatus.textContent = 'Ready';
+            enhancedStatus.className = 'status';
+            enhancedExecutionInfo.style.display = 'none';
         });
 
-        // Auto-scroll A2A logs to bottom
-        const a2aObserver = new MutationObserver(() => {
-            a2aLogOutput.scrollTop = a2aLogOutput.scrollHeight;
+        // Auto-scroll Enhanced logs to bottom
+        const enhancedObserver = new MutationObserver(() => {
+            enhancedLogOutput.scrollTop = enhancedLogOutput.scrollHeight;
         });
-        a2aObserver.observe(a2aLogOutput, { childList: true, subtree: true });
+        enhancedObserver.observe(enhancedLogOutput, { childList: true, subtree: true });
     </script>
 </body>
 
