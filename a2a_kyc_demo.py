@@ -500,7 +500,7 @@ def main():
     
     investor = InvestorAgent(
         investor_id="INV-001",
-        name="Alice Johnson"
+        name="Vansh Ranawat"
     )
     
     company_a = CompanyAgent(
@@ -536,7 +536,7 @@ def main():
     print("\n[INFO] Investor submits identity data to KycAgent (ONE TIME ONLY)")
     
     identity_data = {
-        "name": "Alice Johnson",
+        "name": "Vansh Ranawat",
         "date_of_birth": "1990-05-15",
         "national_id": "US-123456789",
         "address": "123 Main St, San Francisco, CA 94102",
