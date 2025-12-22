@@ -57,6 +57,10 @@ agentic-mcp-adk-a2a-ap2-prototype/
 │   └── server.py           # MCP Tool Server
 ├── ap2/
 │   └── payment_mock.py     # AP2 Payment Mock
+├── ui/
+│   ├── app.py              # Web UI (Flask)
+│   ├── templates/          # HTML templates
+│   └── static/             # CSS/JS assets
 ├── demo_flow.py            # End-to-End Demo
 ├── requirements.txt        # Python Dependencies
 ├── README.md               # This file
@@ -83,9 +87,25 @@ pip install -r requirements.txt
 
 ### Run the Demo
 
+**Option 1: Command Line (Headless)**
 ```bash
 python demo_flow.py
 ```
+
+**Option 2: Web UI (Observability Dashboard)**
+```bash
+# Install Flask (if not already installed)
+pip install flask
+
+# Start the web server
+cd ui
+python app.py
+
+# Open browser to: http://localhost:5000
+# Click "Run Agent Demo" button
+```
+
+The Web UI provides a visual interface to the same headless agent system. See `ui/README_UI.md` for details.
 
 ### Expected Output
 
