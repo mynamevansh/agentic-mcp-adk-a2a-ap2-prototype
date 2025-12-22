@@ -297,6 +297,34 @@ header h1 {
     color: #78350F;
 }
 
+/* Demo Section */
+.demo-section {
+    margin: 24px 32px;
+    padding: 24px 32px;
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+}
+
+.section-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 8px;
+}
+
+.section-description {
+    font-size: 0.875rem;
+    color: #6B7280;
+    margin: 0;
+}
+
 /* Footer */
 footer {
     padding: 20px 32px;
@@ -327,19 +355,19 @@ footer a:hover {
     header h1 {
         font-size: 1.25rem;
     }
-    
+
     .control-panel {
         padding: 16px 20px;
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .execution-info {
         padding: 16px 20px;
         flex-direction: column;
         gap: 12px;
     }
-    
+
     .log-container,
     .info-panel {
         margin: 16px 20px;

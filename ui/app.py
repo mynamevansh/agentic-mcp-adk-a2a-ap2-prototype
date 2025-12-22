@@ -122,6 +122,66 @@ def run_demo():
         }), 500
 
 
+@app.route('/run-a2a-demo', methods=['POST'])
+def run_a2a_demo():
+    """
+    Execute the A2A KYC verification demo
+    
+    Demonstrates agent-to-agent communication for one-time KYC
+    verification with reusable credentials across multiple transactions.
+    """
+    try:
+        # Record execution start time
+        start_time = datetime.now(timezone.utc)
+        
+        # Execute a2a_kyc_demo.py as a subprocess
+        result = subprocess.run(
+            [sys.executable, 'a2a_kyc_demo.py'],
+            cwd=PROJECT_ROOT,  # Run from project root
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+            errors='replace',
+            timeout=30
+        )
+        
+        # Record execution end time
+        end_time = datetime.now(timezone.utc)
+        execution_time = (end_time - start_time).total_seconds()
+        
+        # Check if execution was successful
+        if result.returncode == 0:
+            return jsonify({
+                'success': True,
+                'logs': result.stdout,
+                'execution_time': execution_time,
+                'timestamp': start_time.isoformat(),
+                'message': 'A2A KYC demo executed successfully'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'logs': result.stderr or result.stdout,
+                'execution_time': execution_time,
+                'timestamp': start_time.isoformat(),
+                'message': 'A2A KYC demo execution failed'
+            }), 500
+            
+    except subprocess.TimeoutExpired:
+        return jsonify({
+            'success': False,
+            'logs': 'Execution timeout after 30 seconds',
+            'message': 'A2A KYC demo execution timed out'
+        }), 500
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'logs': str(e),
+            'message': f'Error executing A2A KYC demo: {str(e)}'
+        }), 500
+
+
 @app.route('/health', methods=['GET'])
 def health():
     """

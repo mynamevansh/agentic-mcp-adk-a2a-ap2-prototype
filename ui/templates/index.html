@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agentic System - Observability Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <!--
     DESIGN PHILOSOPHY:
@@ -34,7 +36,7 @@
     - UIs are thin clients for monitoring
     - Observability is separate from orchestration
     -->
-    
+
     <div class="container">
         <!-- Header -->
         <header>
@@ -75,6 +77,45 @@
             <pre id="logOutput" class="log-output">Waiting for execution...</pre>
         </div>
 
+        <!-- A2A KYC Demo Section -->
+        <div class="demo-section">
+            <div class="section-header">
+                <h2>A2A KYC Verification Demo</h2>
+                <p class="section-description">Agent-to-Agent communication for one-time KYC with reusable credentials
+                </p>
+            </div>
+
+            <div class="control-panel">
+                <button id="runA2ABtn" class="run-button">
+                    Run A2A KYC Demo
+                </button>
+                <div id="a2aStatus" class="status">Ready</div>
+            </div>
+
+            <div id="a2aExecutionInfo" class="execution-info" style="display: none;">
+                <div class="info-item">
+                    <span class="label">Execution Time:</span>
+                    <span id="a2aExecutionTime">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Timestamp:</span>
+                    <span id="a2aTimestamp">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Status:</span>
+                    <span id="a2aExecutionStatus">-</span>
+                </div>
+            </div>
+
+            <div class="log-container">
+                <div class="log-header">
+                    <h2>A2A Demo Logs</h2>
+                    <button id="clearA2ABtn" class="clear-button">Clear Logs</button>
+                </div>
+                <pre id="a2aLogOutput" class="log-output">Waiting for execution...</pre>
+            </div>
+        </div>
+
         <!-- Architecture Info -->
         <div class="info-panel">
             <h3>System Architecture</h3>
@@ -86,7 +127,7 @@
                 <li><strong>A2A Protocol:</strong> Enables agent-to-agent communication</li>
             </ul>
             <p class="note">
-                <strong>Note:</strong> This UI is purely for visualization. 
+                <strong>Note:</strong> This UI is purely for visualization.
                 All agent logic runs in <code>demo_flow.py</code> (headless).
                 The system can still be executed via CLI: <code>python demo_flow.py</code>
             </p>
@@ -94,8 +135,8 @@
 
         <!-- Footer -->
         <footer>
-            <p>Agentic MCP-ADK-A2A-AP2 Prototype | 
-               <a href="https://github.com/mynamevansh/agentic-mcp-adk-a2a-ap2-prototype" target="_blank">GitHub</a>
+            <p>Agentic MCP-ADK-A2A-AP2 Prototype |
+                <a href="https://github.com/mynamevansh/agentic-mcp-adk-a2a-ap2-prototype" target="_blank">GitHub</a>
             </p>
         </footer>
     </div>
@@ -194,6 +235,90 @@
             logOutput.scrollTop = logOutput.scrollHeight;
         });
         observer.observe(logOutput, { childList: true, subtree: true });
+
+        // A2A KYC Demo handlers
+        const runA2ABtn = document.getElementById('runA2ABtn');
+        const clearA2ABtn = document.getElementById('clearA2ABtn');
+        const a2aLogOutput = document.getElementById('a2aLogOutput');
+        const a2aStatus = document.getElementById('a2aStatus');
+        const a2aExecutionInfo = document.getElementById('a2aExecutionInfo');
+        const a2aExecutionTime = document.getElementById('a2aExecutionTime');
+        const a2aTimestamp = document.getElementById('a2aTimestamp');
+        const a2aExecutionStatus = document.getElementById('a2aExecutionStatus');
+
+        // Run A2A KYC demo
+        runA2ABtn.addEventListener('click', async () => {
+            // Update UI state
+            runA2ABtn.disabled = true;
+            runA2ABtn.textContent = 'Running...';
+            a2aStatus.textContent = 'Executing A2A KYC demo...';
+            a2aStatus.className = 'status running';
+            a2aLogOutput.textContent = 'Starting A2A KYC verification demo...\n\n';
+            a2aExecutionInfo.style.display = 'none';
+
+            try {
+                // Call backend to execute a2a_kyc_demo.py
+                const response = await fetch('/run-a2a-demo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                // Display logs
+                a2aLogOutput.textContent = data.logs || 'No logs available';
+
+                // Update execution info
+                if (data.execution_time) {
+                    a2aExecutionTime.textContent = `${data.execution_time.toFixed(2)}s`;
+                }
+                if (data.timestamp) {
+                    a2aTimestamp.textContent = new Date(data.timestamp).toLocaleString();
+                }
+
+                // Update status based on success
+                if (data.success) {
+                    a2aStatus.textContent = 'Execution completed successfully';
+                    a2aStatus.className = 'status success';
+                    a2aExecutionStatus.textContent = 'Success';
+                    a2aExecutionStatus.className = 'status-badge success';
+                } else {
+                    a2aStatus.textContent = 'Execution failed';
+                    a2aStatus.className = 'status error';
+                    a2aExecutionStatus.textContent = 'Failed';
+                    a2aExecutionStatus.className = 'status-badge error';
+                }
+
+                a2aExecutionInfo.style.display = 'flex';
+
+            } catch (error) {
+                // Handle network or server errors
+                a2aLogOutput.textContent = `Error: ${error.message}\n\nFailed to connect to backend server.`;
+                a2aStatus.textContent = 'Connection error';
+                a2aStatus.className = 'status error';
+            } finally {
+                // Re-enable button
+                runA2ABtn.disabled = false;
+                runA2ABtn.textContent = 'Run A2A KYC Demo';
+            }
+        });
+
+        // Clear A2A logs
+        clearA2ABtn.addEventListener('click', () => {
+            a2aLogOutput.textContent = 'Waiting for execution...';
+            a2aStatus.textContent = 'Ready';
+            a2aStatus.className = 'status';
+            a2aExecutionInfo.style.display = 'none';
+        });
+
+        // Auto-scroll A2A logs to bottom
+        const a2aObserver = new MutationObserver(() => {
+            a2aLogOutput.scrollTop = a2aLogOutput.scrollHeight;
+        });
+        a2aObserver.observe(a2aLogOutput, { childList: true, subtree: true });
     </script>
 </body>
+
 </html>
