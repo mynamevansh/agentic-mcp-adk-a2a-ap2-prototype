@@ -1,0 +1,247 @@
+﻿================================================================================
+ENHANCED A2A KYC WITH VERIFICATION STATE VIEW
+================================================================================
+
+NEW CONCEPT: Verification State View
+- Agents observe verification STATE (not raw identity data)
+- Only KycAgent owns and updates verification state
+- CompanyAgents request state via A2A
+================================================================================
+
+================================================================================
+PHASE 1: AGENT INITIALIZATION
+================================================================================
+
+[KycAgent-TrustedAuthority] Initialized
+  Role: Trusted Identity Verification Authority
+  Manages: Verification States (NOT raw identity data)
+
+[InvestorAgent-INV-001] Initialized
+  Investor: Vansh Ranawat
+  KYC Status: not_verified
+
+[CompanyAgent-COMP-A] Initialized
+  Company: TechVentures Inc.
+  KYC Requirement: MANDATORY (state-based)
+
+[CompanyAgent-COMP-B] Initialized
+  Company: GreenEnergy Corp.
+  KYC Requirement: MANDATORY (state-based)
+
+================================================================================
+PHASE 2: BEFORE KYC - Verification State View
+================================================================================
+
+[WARNING] Investor has NOT completed KYC verification yet
+[INFO] CompanyAgent will request verification state from KycAgent
+
+[InvestorAgent-INV-001] Requesting investment...
+  Company: TechVentures Inc.
+  Amount: $50,000.00
+  Current KYC Status: not_verified
+
+[CompanyAgent-COMP-A] Received message: investment_request
+
+[CompanyAgent-COMP-A] Processing investment request...
+  Transaction ID: 113d2124-2bfb-4fd7-bc56-0e66fca2e4c8
+  Investor: INV-001
+  Amount: $50,000.00
+
+[CompanyAgent-COMP-A] Requesting verification state from KycAgent...
+
+[KycAgent-TrustedAuthority] Received message: verification_state_request
+
+[KycAgent-TrustedAuthority] Verification state request from CompanyAgent-COMP-A
+  Investor ID: INV-001
+
+[KycAgent-TrustedAuthority] Returning VerificationState:
+  KYC Status: not_verified
+  Verification ID: NONE
+  Permissions: []
+  [PRIVACY] Identity data NOT included in response
+
+============================================================
+[CompanyAgent-COMP-A] Investor Verification State:
+============================================================
+  KYC Status: NOT_VERIFIED
+  Verification ID: NONE
+  Permissions: NONE
+  Allowed Action: [BLOCKED] Transaction blocked
+============================================================
+
+[CompanyAgent-COMP-A] [BLOCKED] Transaction BLOCKED
+  Reason: KYC verification required or insufficient permissions
+
+--------------------------------------------------------------------------------
+RESULT:
+  Status: blocked
+  Reason: KYC verification required or insufficient permissions
+--------------------------------------------------------------------------------
+
+================================================================================
+PHASE 3: KYC VERIFICATION PROCESS (ONE TIME)
+================================================================================
+
+[INFO] Investor submits identity data to KycAgent (ONE TIME ONLY)
+[INFO] KycAgent will create VerificationState
+
+[InvestorAgent-INV-001] Submitting KYC to KycAgent...
+  Identity Data: {
+  "name": "Vansh Ranawat",
+  "date_of_birth": "1990-05-15",
+  "national_id": "US-123456789",
+  "address": "123 Main St, San Francisco, CA 94102",
+  "email": "vansh.ranawat@email.com"
+}
+
+[KycAgent-TrustedAuthority] Received message: kyc_submission
+
+[KycAgent-TrustedAuthority] Processing KYC verification...
+  Investor ID: INV-001
+
+[KycAgent-TrustedAuthority] [SUCCESS] Identity Verified!
+  Verification ID: KYC-F8EDCF6127E8
+
+[KycAgent-TrustedAuthority] VerificationState Created:
+  KYC Status: verified
+  Permissions: ['invest', 'trade']
+  [PRIVACY] Identity data stored securely (hashed)
+
+[InvestorAgent-INV-001] [SUCCESS] KYC Verified!
+  Verification ID: KYC-F8EDCF6127E8
+
+--------------------------------------------------------------------------------
+RESULT:
+  Status: verified
+  Verification ID: KYC-F8EDCF6127E8
+--------------------------------------------------------------------------------
+
+================================================================================
+PHASE 4: AFTER KYC - Verification State View
+================================================================================
+
+[SUCCESS] Investor is now KYC verified
+[INFO] CompanyAgent will request updated verification state
+[INFO] Attempting investment in Company A...
+
+[InvestorAgent-INV-001] Requesting investment...
+  Company: TechVentures Inc.
+  Amount: $50,000.00
+  Current KYC Status: verified
+
+[CompanyAgent-COMP-A] Received message: investment_request
+
+[CompanyAgent-COMP-A] Processing investment request...
+  Transaction ID: 4bdeb3f4-d5e4-4091-87b1-f44b27c5be7b
+  Investor: INV-001
+  Amount: $50,000.00
+
+[CompanyAgent-COMP-A] Requesting verification state from KycAgent...
+
+[KycAgent-TrustedAuthority] Received message: verification_state_request
+
+[KycAgent-TrustedAuthority] Verification state request from CompanyAgent-COMP-A
+  Investor ID: INV-001
+
+[KycAgent-TrustedAuthority] Returning VerificationState:
+  KYC Status: verified
+  Verification ID: KYC-F8EDCF6127E8
+  Permissions: ['invest', 'trade']
+  [PRIVACY] Identity data NOT included in response
+
+============================================================
+[CompanyAgent-COMP-A] Investor Verification State:
+============================================================
+  KYC Status: VERIFIED
+  Verification ID: KYC-F8EDCF6127E8
+  Permissions: invest, trade
+  Allowed Action: [APPROVED] Transaction allowed
+============================================================
+
+[CompanyAgent-COMP-A] [APPROVED] Transaction APPROVED
+  Transaction ID: 4bdeb3f4-d5e4-4091-87b1-f44b27c5be7b
+  Amount: $50,000.00
+
+--------------------------------------------------------------------------------
+RESULT:
+  Status: completed
+  Transaction ID: 4bdeb3f4-d5e4-4091-87b1-f44b27c5be7b
+  Amount: $50,000.00
+--------------------------------------------------------------------------------
+
+================================================================================
+PHASE 5: REUSABLE VERIFICATION STATE
+================================================================================
+
+[INFO] Attempting investment in Company B...
+[INFO] Company B will request SAME verification state
+[INFO] No re-verification needed
+
+[InvestorAgent-INV-001] Requesting investment...
+  Company: GreenEnergy Corp.
+  Amount: $75,000.00
+  Current KYC Status: verified
+
+[CompanyAgent-COMP-B] Received message: investment_request
+
+[CompanyAgent-COMP-B] Processing investment request...
+  Transaction ID: b9110d82-66ce-4c48-a309-2961c53c499c
+  Investor: INV-001
+  Amount: $75,000.00
+
+[CompanyAgent-COMP-B] Requesting verification state from KycAgent...
+
+[KycAgent-TrustedAuthority] Received message: verification_state_request
+
+[KycAgent-TrustedAuthority] Verification state request from CompanyAgent-COMP-B
+  Investor ID: INV-001
+
+[KycAgent-TrustedAuthority] Returning VerificationState:
+  KYC Status: verified
+  Verification ID: KYC-F8EDCF6127E8
+  Permissions: ['invest', 'trade']
+  [PRIVACY] Identity data NOT included in response
+
+============================================================
+[CompanyAgent-COMP-B] Investor Verification State:
+============================================================
+  KYC Status: VERIFIED
+  Verification ID: KYC-F8EDCF6127E8
+  Permissions: invest, trade
+  Allowed Action: [APPROVED] Transaction allowed
+============================================================
+
+[CompanyAgent-COMP-B] [APPROVED] Transaction APPROVED
+  Transaction ID: b9110d82-66ce-4c48-a309-2961c53c499c
+  Amount: $75,000.00
+
+--------------------------------------------------------------------------------
+RESULT:
+  Status: completed
+  Transaction ID: b9110d82-66ce-4c48-a309-2961c53c499c
+  Amount: $75,000.00
+--------------------------------------------------------------------------------
+
+================================================================================
+DEMONSTRATION SUMMARY
+================================================================================
+
+[SUCCESS] Key Achievements:
+  1. Verification State View implemented
+  2. CompanyAgents see STATE, not identity data
+  3. Clear BEFORE vs AFTER state visibility
+  4. State-based authorization (permissions)
+  5. Reusable verification state across companies
+
+[INFO] State Transition Flow:
+  BEFORE KYC: State = NOT_VERIFIED, Permissions = NONE
+  KYC PROCESS: State updated to VERIFIED, Permissions granted
+  AFTER KYC: State = VERIFIED, Permissions = [INVEST, TRADE]
+  REUSE: Same state accessible to all companies
+
+[PRIVACY] Privacy Model:
+  - Identity data stored ONLY in KycAgent (hashed)
+  - CompanyAgents receive ONLY verification state
+  - No identity fields in CompanyAgent logs
+  - State-based authorization (not document-based)
+================================================================================
