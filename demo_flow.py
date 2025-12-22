@@ -15,6 +15,12 @@ import sys
 import os
 from datetime import datetime
 
+# Fix Windows console encoding for emoji support
+if sys.platform == 'win32':
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, 'strict')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, 'strict')
+
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
