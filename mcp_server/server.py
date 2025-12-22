@@ -11,7 +11,7 @@ This server exposes three core tools:
 import json
 import uuid
 from datetime import datetime
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Callable
 from dataclasses import dataclass, asdict
 from enum import Enum
 
@@ -58,7 +58,7 @@ class MCPServer:
     
     def __init__(self):
         self.tasks: Dict[str, Task] = {}
-        self.action_handlers: Dict[str, callable] = {
+        self.action_handlers: Dict[str, Callable[[Dict[str, Any]], Dict[str, Any]]] = {
             "find_workspace": self._find_workspace,
             "confirm_booking": self._confirm_booking,
             "send_notification": self._send_notification,
