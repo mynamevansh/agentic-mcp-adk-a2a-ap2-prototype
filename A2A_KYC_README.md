@@ -56,7 +56,7 @@ class A2AMessage:
 
 ### Phase 1: Agent Initialization
 - Initialize KycAgent (trusted identity service)
-- Initialize InvestorAgent (Alice Johnson)
+- Initialize InvestorAgent (Vansh Ranawat)
 - Initialize CompanyAgent A (TechVentures Inc.)
 - Initialize CompanyAgent B (GreenEnergy Corp.)
 
@@ -81,7 +81,7 @@ RESULT:
 ```
 [InvestorAgent] 📤 Submitting KYC to KycAgent...
   Identity Data: {
-    "name": "Alice Johnson",
+    "name": "Vansh Ranawat",
     "date_of_birth": "1990-05-15",
     "national_id": "US-123456789",
     "address": "123 Main St, San Francisco, CA 94102",
