@@ -26,7 +26,7 @@ The prototype runs successfully and demonstrates all required functionality.
 ### Three Autonomous Agents
 
 #### 1. InvestorAgent
-- Represents the investor (Alice Johnson)
+- Represents the investor (Vansh Ranawat)
 - Initiates investment requests
 - Performs **one-time** KYC submission to KycAgent
 - Holds verification credential for reuse
@@ -53,7 +53,7 @@ The prototype runs successfully and demonstrates all required functionality.
   Role: Trusted Identity Verification Service
 
 [InvestorAgent-INV-001] Initialized
-  Investor: Alice Johnson
+  Investor: Vansh Ranawat
   KYC Status: not_verified
 
 [CompanyAgent-COMP-A] Initialized
@@ -93,7 +93,7 @@ RESULT:
 ```
 [InvestorAgent-INV-001] Submitting KYC to KycAgent...
   Identity Data: {
-    "name": "Alice Johnson",
+    "name": "Vansh Ranawat",
     "date_of_birth": "1990-05-15",
     "national_id": "US-123456789",
     "address": "123 Main St, San Francisco, CA 94102",
