@@ -16,9 +16,11 @@ This agent simulates ADK (Agent Development Kit) concepts:
 """
 
 import json
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, asdict
 from datetime import datetime
+
+from .messages import A2AMessage
 
 
 @dataclass
@@ -42,17 +44,6 @@ class ExecutionPlan:
     status: str
 
 
-@dataclass
-class A2AMessage:
-    """Agent-to-Agent message structure"""
-    message_id: str
-    from_agent: str
-    to_agent: str
-    message_type: str  # "task_delegation", "status_update", "result"
-    payload: Dict[str, Any]
-    timestamp: str
-
-
 class AgentKai:
     """
     Agent Kai - The Planner
@@ -71,7 +62,7 @@ class AgentKai:
         self.message_history: List[A2AMessage] = []
         print(f"[Agent Kai] 🧠 Planner agent initialized (ID: {agent_id})")
     
-    def receive_goal(self, goal: str, context: Dict[str, Any] = None) -> ExecutionPlan:
+    def receive_goal(self, goal: str, context: Optional[Dict[str, Any]] = None) -> ExecutionPlan:
         """
         Receive a high-level goal from the user
         

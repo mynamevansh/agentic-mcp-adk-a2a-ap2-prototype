@@ -24,8 +24,9 @@ if sys.platform == 'win32':
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from agents.kai import AgentKai, A2AMessage
+from agents.kai import AgentKai
 from agents.nav import AgentNav
+from agents.messages import A2AMessage
 from mcp_server.server import get_mcp_server
 from ap2.payment_mock import get_ap2_instance
 

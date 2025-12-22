@@ -27,6 +27,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from mcp_server.server import get_mcp_server
 from ap2.payment_mock import get_ap2_instance
+from .messages import A2AMessage
 
 
 @dataclass
@@ -41,17 +42,6 @@ class TaskExecution:
     completed_at: Optional[str] = None
     result: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
-
-
-@dataclass
-class A2AMessage:
-    """Agent-to-Agent message structure"""
-    message_id: str
-    from_agent: str
-    to_agent: str
-    message_type: str
-    payload: Dict[str, Any]
-    timestamp: str
 
 
 class AgentNav:
@@ -105,7 +95,7 @@ class AgentNav:
         """Handle task delegation from Agent Kai"""
         payload = message.payload
         step = payload.get("step")
-        plan_id = payload.get("plan_id")
+        plan_id = payload.get("plan_id", "UNKNOWN")
         
         if not step:
             return {"error": "No step information in message"}
