@@ -24,7 +24,7 @@ from flask import Flask, render_template, jsonify
 import subprocess
 import sys
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 
@@ -69,7 +69,7 @@ def run_demo():
     """
     try:
         # Record execution start time
-        start_time = datetime.utcnow()
+        start_time = datetime.now(timezone.utc)
         
         # Execute demo_flow.py as a subprocess
         # This keeps agent execution isolated and captures all output
@@ -84,7 +84,7 @@ def run_demo():
         )
         
         # Record execution end time
-        end_time = datetime.utcnow()
+        end_time = datetime.now(timezone.utc)
         execution_time = (end_time - start_time).total_seconds()
         
         # Check if execution was successful
@@ -132,7 +132,7 @@ def health():
     return jsonify({
         'status': 'healthy',
         'service': 'Agentic System UI',
-        'timestamp': datetime.utcnow().isoformat()
+        'timestamp': datetime.now(timezone.utc).isoformat()
     })
 
 
