@@ -1,0 +1,21 @@
+# Core dependencies for agentic prototype
+# Python 3.9+ required
+
+# MCP Server dependencies
+pydantic>=2.0.0
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# Agent framework (simulated ADK)
+# Note: Using standard libraries to simulate ADK concepts
+# In production, use actual Google ADK when available
+
+# Async and utilities
+aiohttp>=3.9.0
+python-dotenv>=1.0.0
+
+# JSON and data handling
+orjson>=3.9.0
+
+# Logging and observability
+structlog>=23.2.0
