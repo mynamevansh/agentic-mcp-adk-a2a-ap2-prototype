@@ -86,12 +86,12 @@ PHASE 3: KYC VERIFICATION PROCESS (ONE TIME)
 [INFO] KycAgent will create VerificationState
 
 [InvestorAgent-INV-001] Submitting KYC to KycAgent...
-  Identity Data: {
-  "name": "Vansh Ranawat",
-  "date_of_birth": "1990-05-15",
-  "national_id": "US-123456789",
-  "address": "123 Main St, San Francisco, CA 94102",
-  "email": "vansh.ranawat@email.com"
+identity_data = {
+      "name": "Vansh Ranawat",
+      "date_of_birth": "2000-05-10",
+      "national_id": "IN-123456789",
+      "address": "Pune,Maharashtra",
+      "email": "vansh.ranawat@email.com"
 }
 
 [KycAgent-TrustedAuthority] Received message: kyc_submission

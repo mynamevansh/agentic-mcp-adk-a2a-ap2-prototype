@@ -130,7 +130,7 @@ class TransactionState:
     amount: float
     status: TransactionStatus
     reason: Optional[str] = None
-    timestamp: str = None
+    timestamp: Optional[str] = None
     
     def __post_init__(self):
         if self.timestamp is None:
@@ -358,7 +358,7 @@ class KycAgent:
         Handle verification state request from CompanyAgent
         Returns VerificationState (NOT identity data)
         """
-        investor_id = message.payload.get("investor_id")
+        investor_id = message.payload.get("investor_id", "")
         
         print(f"\n[{self.agent_id}] Verification state request from {message.sender_agent}")
         print(f"  Investor ID: {investor_id}")
@@ -469,6 +469,23 @@ class CompanyAgent:
         # A2A communication with KycAgent
         state_response = self.kyc_agent.receive_message(state_request)
         verification_state_dict = state_response.payload.get("verification_state")
+        
+        if verification_state_dict is None:
+            print(f"\n[{self.agent_id}] [ERROR] No verification state received")
+            transaction.status = TransactionStatus.BLOCKED
+            transaction.reason = "Unable to retrieve verification state"
+            return A2AMessage(
+                message_id=str(uuid.uuid4()),
+                message_type=MessageType.INVESTMENT_RESPONSE,
+                sender_agent=self.agent_id,
+                recipient_agent=message.sender_agent,
+                timestamp=datetime.now().isoformat(),
+                payload={
+                    "transaction_id": transaction.transaction_id,
+                    "status": transaction.status.value,
+                    "reason": transaction.reason
+                }
+            )
         
         # Display verification state view
         print(f"\n{'='*60}")
@@ -597,9 +614,9 @@ def main():
     
     identity_data = {
         "name": "Vansh Ranawat",
-        "date_of_birth": "1990-05-15",
-        "national_id": "US-123456789",
-        "address": "123 Main St, San Francisco, CA 94102",
+        "date_of_birth": "2000-05-10",
+        "national_id": "IN-123456789",
+        "address": "Pune,Maharashtra",
         "email": "vansh.ranawat@email.com"
     }
     
